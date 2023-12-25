@@ -1,0 +1,19 @@
+{
+  "seed": 0,
+  "dataset": {
+    "classification_mode": "binary",
+    "k_fold": 10,
+    "type": "np",
+    "n_worker": 4
+  },
+  "model": {
+    "name": "BILSTM",
+    "epoch": 1,
+    "batch_size": 128,
+    "optimizer": "adam",
+    "loss": "cce",
+    "lr": 0.001,
+    "min_lr": 0.00001,
+    "patience": 10
+  }
+}

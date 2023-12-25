@@ -1,0 +1,11 @@
+.idea
+session*
+__pycache__
+dataset/NSL_KDD/file/*
+dataset/UNSW_NB15/file/*
+dataset/KDD_CUP99/file/*
+dataset/CICIDS/file/*
+!dataset/NSL_KDD/README.md
+!dataset/UNSW_NB15/README.md
+!dataset/KDD_CUP99/README.md
+!dataset/CICIDS/README.md

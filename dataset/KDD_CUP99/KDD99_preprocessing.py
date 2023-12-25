@@ -175,6 +175,7 @@ if __name__ == "__main__":
     base_path = Path(__file__).resolve().parent.joinpath('file')
     train_file_path = base_path.joinpath('original', 'kddcup.data_10_percent_corrected')
     test_file_path = base_path.joinpath('original', 'corrected.gz')
+    save_path = os.path.join(base_path, 'preprocessed')
     classification_mode = 'binary'
 
     preprocess = BuildDataFrames(train_path=str(train_file_path),
@@ -187,7 +188,7 @@ if __name__ == "__main__":
     preprocess.numerical()
     preprocess.scaling(normalization_method='normalization')
     preprocess.shuffle()
-    preprocess.save_data_frames(base_path)
+    preprocess.save_data_frames(save_path)
     train_preprocessed, test_preprocessed = preprocess.get_data_frames()
     print(train_preprocessed.head())
     print(test_preprocessed.head())

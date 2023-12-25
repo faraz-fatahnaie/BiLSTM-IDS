@@ -125,9 +125,10 @@ if __name__ == '__main__':
     base_path = Path(__file__).resolve().parent.joinpath('file')
     train_path = base_path.joinpath('original', 'UNSW_NB15_training-set.csv')
     test_path = base_path.joinpath('original', 'UNSW_NB15_testing-set.csv')
+    save_path = os.path.join(base_path, 'preprocessed')
     classification_m = 'binary'
 
-    preprocessor = Preprocessor(train_path, test_path, base_path, classification_m, 'label', 'normalization')
+    preprocessor = Preprocessor(train_path, test_path, save_path, classification_m, 'label', 'normalization')
     preprocessor.preprocess()
     train_preprocessed, test_preprocessed = preprocessor.__getitem__()
     print(train_preprocessed.head())

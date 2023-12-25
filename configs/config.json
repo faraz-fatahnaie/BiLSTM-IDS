@@ -8,7 +8,7 @@
   },
   "model": {
     "name": "BILSTM",
-    "epoch": 1,
+    "epoch": 50,
     "batch_size": 128,
     "optimizer": "adam",
     "loss": "cce",

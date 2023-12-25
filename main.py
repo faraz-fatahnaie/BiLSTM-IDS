@@ -123,7 +123,7 @@ def train(dataset_name):
                             epochs=config['EPOCHS'],
                             batch_size=config['BATCH_SIZE'],
                             callbacks=[model_checkpoint, early_stop],
-                            verbose=0)
+                            verbose=2)
 
         pred = model.predict(X_test, workers=4, verbose=2)
 

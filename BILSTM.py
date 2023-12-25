@@ -48,7 +48,7 @@ class BiLstm(Model):
         self.model = tf.keras.Model(inputs=model_input, outputs=output)
 
         self.initialize()
-        self.model.summary()
+        # self.model.summary()
 
     def call(self, inputs):
         return self.model(inputs)

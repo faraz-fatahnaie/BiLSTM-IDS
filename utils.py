@@ -35,6 +35,21 @@ def parse_data(df, dataset_name: str, classification_mode: str, mode: str = 'np'
         return dt, lb
 
 
+def get_result(cm):
+    tp = cm[0][0]  # normal as normal
+    fp = cm[0][1]  # normal predicted as attack
+    fn = cm[1][0]  # attack predicted as normal
+    tn = cm[1][1]  # attack as attack
+
+    OA = (tp + tn) / (tn + fn + fp + tp)
+    P = tp / (tp + fp)
+    R = tp / (tp + fn)
+    F1 = 2 * ((P * R) / (P + R))
+    FAR = fn / (tn + fn)
+
+    return {"OA": OA, "P": P, "R": R, "F1": F1, "FAR": FAR}
+
+
 def save_dataframe(dataframe: DataFrame, save_path: Path, dataframe_type: str = 'train',
                    classification_mode: str = 'binary') -> None:
     file_name = dataframe_type

@@ -107,11 +107,10 @@ def train_cf(params):
         x = Dropout(params['dropout1'])(x)
         x = MultiHeadAttention(num_heads=params['n_head'], key_dim=params['embed_dim'])(x, x, x)
 
-        forward_layer = LSTM(params['LSTM_unit'], return_sequences=True)
-        backward_layer = LSTM(params['LSTM_unit'], return_sequences=True, go_backwards=True)
-        x = Bidirectional(forward_layer, backward_layer=backward_layer, merge_mode='sum')(x)
-        x = Flatten()(x)
-        # x = Bidirectional(LSTM(128))(x)
+        # forward_layer = LSTM(params['LSTM_unit'])
+        # backward_layer = LSTM(params['LSTM_unit'], go_backwards=True)
+        # x = Bidirectional(forward_layer, backward_layer=backward_layer, merge_mode='sum')(x)
+        x = Bidirectional(LSTM(params['LSTM_unit']))(x)
 
         x = Dense(params['dense_unit'], activation='relu')(x)
         x = Dropout(params['dropout2'])(x)

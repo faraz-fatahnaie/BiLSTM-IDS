@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 
+from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelBinarizer, LabelEncoder
 from pathlib import Path
 
@@ -89,13 +90,11 @@ class BuildDataFrames:
             self.test[self.label_col_name] = self.test[self.label_col_name].apply(
                 lambda x: 'attack.' if x != 'normal.' else x)
 
-    def scaling(self, normalization_method):
+    def scaling(self):
         train, test = self.train.copy(), self.test.copy()
         listContent = list(self.listNumerical)
 
-        scaler = MinMaxScaler()
-        if normalization_method == 'standardization':
-            scaler = StandardScaler()
+        scaler = StandardScaler()
 
         scaler.fit(train[listContent].values)
         train[listContent] = scaler.transform(train[listContent].values)
@@ -169,6 +168,20 @@ class BuildDataFrames:
     def get_data_frames(self):
         return self.train, self.test
 
+    def augmentation(self):
+        print(f'number of training samples before data augmentation{self.train[self.label_col_name].value_counts()}')
+        train = self.train
+
+        smote = SMOTE(random_state=0)
+        X_resampled, y_resampled = smote.fit_resample(train.drop(self.label_col_name, axis=1),
+                                                      train[self.label_col_name])
+
+        train = pd.DataFrame(X_resampled, columns=train.drop(self.label_col_name, axis=1).columns)
+        train[self.label_col_name] = y_resampled
+
+        self.train = train
+        print(f'number of training samples after data augmentation{self.train[self.label_col_name].value_counts()}')
+
 
 if __name__ == "__main__":
     set_seed(0)
@@ -186,7 +199,8 @@ if __name__ == "__main__":
     preprocess.label_mapping()
     preprocess.label_binarizing()
     preprocess.numerical()
-    preprocess.scaling(normalization_method='normalization')
+    preprocess.scaling()
+    preprocess.augmentation()
     preprocess.shuffle()
     preprocess.save_data_frames(save_path)
     train_preprocessed, test_preprocessed = preprocess.get_data_frames()

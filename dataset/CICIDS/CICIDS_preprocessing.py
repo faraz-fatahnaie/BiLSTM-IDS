@@ -1,4 +1,5 @@
 import numpy as np
+from imblearn.over_sampling import SMOTE
 
 from sklearn.model_selection import train_test_split
 
@@ -32,6 +33,7 @@ class Preprocessor:
         self._handle_missing()
         self._categorize_columns()
         self._scaling()
+        self._augmentation()
         self._reorder_columns()
         self._sort()
         self._shuffle()
@@ -116,6 +118,20 @@ class Preprocessor:
         train[listContent] = scaler.transform(train[listContent])
         test[listContent] = scaler.transform(test[listContent])
         self.train_df, self.test_df = train, test
+
+    def _augmentation(self):
+        print(f'number of training samples before data augmentation{self.train_df[self.label_col_name].value_counts()}')
+        train = self.train_df
+
+        smote = SMOTE(random_state=0)
+        X_resampled, y_resampled = smote.fit_resample(train.drop(self.label_col_name, axis=1),
+                                                      train[self.label_col_name])
+
+        train = pd.DataFrame(X_resampled, columns=train.drop(self.label_col_name, axis=1).columns)
+        train[self.label_col_name] = y_resampled
+
+        self.train_df = train
+        print(f'number of training samples after data augmentation{self.train_df[self.label_col_name].value_counts()}')
 
     def _replace_labels(self):
         print('LABELS OF DATASET BEFORE REPLACING LABELS\n', self.DataFrame[self.label_col_name].value_counts())

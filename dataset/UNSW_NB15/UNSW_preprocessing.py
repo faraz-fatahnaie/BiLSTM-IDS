@@ -128,7 +128,7 @@ if __name__ == '__main__':
     save_path = os.path.join(base_path, 'preprocessed')
     classification_m = 'binary'
 
-    preprocessor = Preprocessor(train_path, test_path, save_path, classification_m, 'label', 'normalization')
+    preprocessor = Preprocessor(train_path, test_path, save_path, classification_m, 'label', 'standardization')
     preprocessor.preprocess()
     train_preprocessed, test_preprocessed = preprocessor.__getitem__()
     print(train_preprocessed.head())

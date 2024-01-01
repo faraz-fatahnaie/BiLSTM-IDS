@@ -154,7 +154,7 @@ if __name__ == '__main__':
     preprocessor = Preprocessor(dataset_path=data_path,
                                 save_path=save_path,
                                 label_col_name='classification',
-                                norm_method='normalization')
+                                norm_method='standardization')
     preprocessor.preprocess()
     train_preprocessed, test_preprocessed = preprocessor.__getitem__()
     print(train_preprocessed.head())

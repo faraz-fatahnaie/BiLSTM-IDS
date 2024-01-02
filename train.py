@@ -78,7 +78,7 @@ def train_cf(params):
         result_table = pd.read_csv(result_path)
 
         tid += 1
-        selected_row = result_table[result_table['tid'] == params['tid']]
+        selected_row = result_table[result_table['tid'] == tid]
         print(selected_row)
         loss_hp = selected_row['F1_val'].values[0]
         loss_hp = -loss_hp

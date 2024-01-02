@@ -45,7 +45,7 @@ def get_result(cm):
     P = tp / (tp + fp)
     R = tp / (tp + fn)
     F1 = 2 * ((P * R) / (P + R))
-    FAR = fn / (tn + fn)
+    FAR = fp / (tn + fp)
 
     return {"OA": OA, "P": P, "R": R, "F1": F1, "FAR": FAR}
 
